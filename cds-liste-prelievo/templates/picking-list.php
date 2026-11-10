@@ -56,8 +56,11 @@ $site_name = get_bloginfo( 'name' );
 	.recipient-head { display: flex; justify-content: space-between; gap: 4mm; padding: 2.5mm 3mm; background: #f2f2f2; border-bottom: 1px solid #000; }
 	.recipient-head .who { font-size: 11.5pt; font-weight: 700; }
 	.recipient-head .addr { font-size: 9.5pt; line-height: 1.35; }
-	.recipient-head .orders { text-align: right; font-size: 9.5pt; line-height: 1.4; white-space: nowrap; }
+	.recipient-head .orders { display: flex; flex-direction: column; gap: 2mm; font-size: 9.5pt; line-height: 1.35; white-space: nowrap; }
 	.recipient-head .orders strong { font-size: 11.5pt; }
+	.order-ref { display: flex; align-items: center; justify-content: flex-end; gap: 2.5mm; text-align: right; }
+	.qr { width: 20mm; height: 20mm; flex: none; background: #fff; }
+	.qr svg { display: block; width: 100%; height: 100%; }
 	.recipient table th { background: none; }
 	.recipient table tr:last-child td { border-bottom: 0; }
 	.note { padding: 2mm 3mm; border-top: 1px dashed #000; font-size: 9pt; }
@@ -161,8 +164,14 @@ $site_name = get_bloginfo( 'name' );
 					</div>
 					<div class="orders">
 						<?php foreach ( $r['orders'] as $o ) : ?>
-							<strong>#<?php echo esc_html( $o['number'] ); ?></strong> <?php echo esc_html( $o['date'] ); ?><br>
-							<?php if ( $o['method'] ) : ?><small><?php echo esc_html( $o['method'] ); ?></small><br><?php endif; ?>
+							<div class="order-ref">
+								<div class="order-info">
+									<strong>#<?php echo esc_html( $o['number'] ); ?></strong><br>
+									<?php echo esc_html( $o['date'] ); ?>
+									<?php if ( $o['method'] ) : ?><br><small><?php echo esc_html( $o['method'] ); ?></small><?php endif; ?>
+								</div>
+								<div class="qr" data-url="<?php echo esc_url( $o['url'] ); ?>" title="<?php echo esc_attr( 'Apri ordine #' . $o['number'] ); ?>"></div>
+							</div>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -206,8 +215,24 @@ $site_name = get_bloginfo( 'name' );
 
 </div>
 
+<script src="<?php echo esc_url( CDS_PL_URL . 'assets/vendor/qrcode.js?ver=' . CDS_PL_VERSION ); ?>"></script>
 <script>
-	window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
+	(function () {
+		// QR verso il dettaglio ordine in WooCommerce, generati in locale (nessun servizio esterno).
+		if (typeof qrcode === 'function') {
+			document.querySelectorAll('.qr[data-url]').forEach(function (el) {
+				try {
+					var qr = qrcode(0, 'M');
+					qr.addData(el.getAttribute('data-url'));
+					qr.make();
+					el.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+				} catch (e) {
+					el.style.display = 'none';
+				}
+			});
+		}
+		window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
+	})();
 </script>
 </body>
 </html>

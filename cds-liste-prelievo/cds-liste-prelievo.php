@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       CDS Liste di Prelievo
  * Description:       Aggiunge alla pagina Ordini di WooCommerce un pulsante per generare le liste di prelievo (per prodotto e per destinatario) degli ordini selezionati, pronte per la stampa A4.
- * Version:           1.0.0
+ * Version:           1.2.0
  * Author:            Vitamina Studio
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CDS_PL_VERSION', '1.0.0' );
+define( 'CDS_PL_VERSION', '1.2.0' );
 define( 'CDS_PL_FILE', __FILE__ );
 define( 'CDS_PL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CDS_PL_URL', plugin_dir_url( __FILE__ ) );

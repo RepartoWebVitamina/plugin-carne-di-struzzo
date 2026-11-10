@@ -1,7 +1,7 @@
 === CDS Liste di Prelievo ===
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.2.0
 
 Liste di prelievo stampabili (A4 verticale) dagli ordini WooCommerce selezionati.
 
@@ -27,7 +27,21 @@ Le quantità rimborsate vengono sottratte. Compatibile con HPOS e con l'archivia
 * cds_pl_capability (default: edit_shop_orders)
 * cds_pl_data — modifica i dati prima del rendering.
 
+== Librerie incluse ==
+
+* assets/vendor/qrcode.js — QR Code Generator for JavaScript 1.4.4, (c) Kazuhiko Arase, licenza MIT.
+
 == Changelog ==
+
+= 1.2.0 =
+* Lista per destinatario: QR code per ogni ordine che apre il dettaglio ordine in WooCommerce
+  (generato in locale, nessun servizio esterno).
+
+= 1.1.0 =
+* Pulsante disattivato finché non è selezionato almeno un ordine; mostra il numero di ordini selezionati.
+
+= 1.0.1 =
+* Considerati solo i checkbox di riga spuntati (esclusi i "seleziona tutti").
 
 = 1.0.0 =
 * Prima versione.

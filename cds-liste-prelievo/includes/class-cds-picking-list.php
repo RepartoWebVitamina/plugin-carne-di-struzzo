@@ -140,6 +140,8 @@ final class CDS_Picking_List {
 				'date'   => $order->get_date_created() ? $order->get_date_created()->date_i18n( 'd/m/Y' ) : '',
 				'status' => wc_get_order_status_name( $order->get_status() ),
 				'method' => $order->get_shipping_method(),
+				// Link al dettaglio ordine in admin (gestisce sia HPOS sia legacy post.php?post=ID&action=edit).
+				'url'    => $order->get_edit_order_url(),
 			);
 
 			$note = trim( (string) $order->get_customer_note() );
